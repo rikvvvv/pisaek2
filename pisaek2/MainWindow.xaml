@@ -1,0 +1,19 @@
+﻿<Window x:Class="pisaek2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pisaek2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1050" Width="1050"
+        Background="Black"
+        WindowStartupLocation="CenterScreen"
+        >
+    <UserControl KeyDown="UserControl_Loaded">
+        
+    <Grid x:Name="Siatka">
+        <Grid.ColumnDefinitions/>
+        <Grid.RowDefinitions/>
+    </Grid>
+    </UserControl>
+</Window>
