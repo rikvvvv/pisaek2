@@ -14,6 +14,7 @@
     <Grid x:Name="Siatka">
         <Grid.ColumnDefinitions/>
         <Grid.RowDefinitions/>
-    </Grid>
+            <Label Name="Tekst" Foreground="White" Grid.ColumnSpan="10"/>
+        </Grid>
     </UserControl>
 </Window>

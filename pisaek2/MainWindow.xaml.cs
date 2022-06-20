@@ -28,19 +28,19 @@ namespace pisaek2
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 , 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
+            {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
         };
         public MainWindow()
         {
@@ -87,31 +87,46 @@ namespace pisaek2
         }
 
         async void Petla() 
-        { 
-
+        {
             for(; ; )
             {
 
                 foreach (Rectangle piasek in lista)
                 {
-                    int posX, posY;
-                    posX = int.Parse(piasek.GetValue(Grid.ColumnProperty).ToString());
-                    posY = int.Parse(piasek.GetValue(Grid.RowProperty).ToString());
-                    if (posY + 1 < sizeOfWindow)
-                    {
+                    int posX = int.Parse(piasek.GetValue(Grid.ColumnProperty).ToString());
+                    int posY = int.Parse(piasek.GetValue(Grid.RowProperty).ToString());
+                    Tekst.Content = string.Format($"ilosc elementow: {lista.Count} X: {posX} Y: {posY}");
 
-                        
-                    if(mapa[posY+1,posX] == 0)
+                    if (posY + 1< sizeOfWindow)
                     {
-                        piasek.SetValue(Grid.RowProperty, posY + 1);
-                    mapa[posY, posY] = 0;
-                    mapa[posY + 1, posY] = 1;
+                        if(mapa[posY + 1,posX] != 1)
+                        {
+                            mapa[posY, posX] = 0;
+                            mapa[posY + 1, posX] = 1;
+                            piasek.SetValue(Grid.RowProperty, posY + 1);
+                        }
 
-                    }
+                        else if(mapa[posY + 1,posX] == 1)
+                        {
+                            if(mapa[posY + 1, posX + 1] == 0)
+                            {
+                                mapa[posY, posX] = 0;
+                                mapa[posY + 1, posX + 1] = 1;
+                                piasek.SetValue(Grid.RowProperty, posY + 1);
+                                piasek.SetValue(Grid.ColumnProperty, posX + 1);
+                            }
+                            else if(mapa[posY + 1, posX - 1] == 0)
+                            {
+                                mapa[posY, posX] = 0;
+                                mapa[posY + 1, posX - 1] = 1;
+                                piasek.SetValue(Grid.RowProperty, posY + 1);
+                                piasek.SetValue(Grid.ColumnProperty, posX - 1);
+                            }
+                        }
                     }
 
                 }
-                    await Task.Delay(500);
+                    await Task.Delay(100);
             }
         }
 
