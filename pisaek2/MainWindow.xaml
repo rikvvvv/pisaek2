@@ -9,12 +9,19 @@
         Background="Black"
         WindowStartupLocation="CenterScreen"
         >
-    <UserControl KeyDown="UserControl_Loaded">
-        
+
+    <UserControl Loaded="UserControl_Loaded">
+
     <Grid x:Name="Siatka">
+            <Grid.Resources>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Margin" Value="1"/>
+                </Style>
+            </Grid.Resources>
         <Grid.ColumnDefinitions/>
         <Grid.RowDefinitions/>
             <Label Name="Tekst" Foreground="White" Grid.ColumnSpan="10"/>
+            <Rectangle Name="Kursor" Stroke="Violet" StrokeThickness="1"/>
         </Grid>
     </UserControl>
 </Window>

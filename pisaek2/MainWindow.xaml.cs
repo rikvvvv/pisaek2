@@ -21,27 +21,11 @@ namespace pisaek2
     /// </summary>
     public partial class MainWindow : Window
     {
-        int sizeOfWindow = 16;
+        int sizeOfWindow = 32;
         List<Rectangle> lista = new List<Rectangle>();
-        int[,] mapa =
-        {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 , 0, 0, 0, 0 },
-            {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 , 0, 0, 0, 0 },
-        };
+        int cursorRow = 0;
+        int cursorCol = 0;
+        int[,] mapa;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,25 +35,17 @@ namespace pisaek2
 
         void Init()
         {
+            mapa = new int[sizeOfWindow, sizeOfWindow];
             for(int i = 0; i < sizeOfWindow; i++)
             {
                 Siatka.RowDefinitions.Add(new RowDefinition());
                 Siatka.ColumnDefinitions.Add(new ColumnDefinition());
+                
                 for(int j = 0; j < sizeOfWindow; j++)
                 {
-
-                    if(mapa[i,j] == 1)
-                    {
-                        Rectangle kwadrat = new Rectangle()
-                        {
-                            Fill = Brushes.LightYellow,
-                        };
-                        Siatka.Children.Add(kwadrat);
-                        kwadrat.SetValue(Grid.RowProperty, i);
-                        kwadrat.SetValue(Grid.ColumnProperty, j);
-                        lista.Add(kwadrat);
-                    }
+                    mapa[i, j] = 0;
                 }
+                
 
             }
         }
@@ -82,8 +58,30 @@ namespace pisaek2
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
-            //if(e.Key == Key.A)
-                //Petla();
+            if (e.Key == Key.A && cursorCol > 0)
+                cursorCol--;
+            if (e.Key == Key.D && cursorCol < sizeOfWindow -1)
+                cursorCol++;
+            if (e.Key == Key.W && cursorRow > 0)
+                cursorRow--;
+            if (e.Key == Key.S && cursorRow < sizeOfWindow - 1)
+                cursorRow++;
+
+            Kursor.SetValue(Grid.RowProperty, cursorRow);
+            Kursor.SetValue(Grid.ColumnProperty, cursorCol);
+
+            if (e.Key == Key.Space && mapa[cursorRow,cursorCol] == 0)
+            {
+                Rectangle kwadrat = new Rectangle()
+                {
+                    Fill = Brushes.LightYellow,
+                };
+                Siatka.Children.Add(kwadrat);
+                kwadrat.SetValue(Grid.RowProperty, cursorRow);
+                kwadrat.SetValue(Grid.ColumnProperty, cursorCol);
+                lista.Add(kwadrat);
+            }
+
         }
 
         async void Petla() 
@@ -95,7 +93,7 @@ namespace pisaek2
                 {
                     int posX = int.Parse(piasek.GetValue(Grid.ColumnProperty).ToString());
                     int posY = int.Parse(piasek.GetValue(Grid.RowProperty).ToString());
-                    Tekst.Content = string.Format($"ilosc elementow: {lista.Count} X: {posX} Y: {posY}");
+                    Tekst.Content = string.Format($"ilosc elementow: {lista.Count} X: {posX} Y: {posY}   Row: {cursorRow} Col: {cursorCol}");
 
                     if (posY + 1< sizeOfWindow)
                     {
@@ -126,7 +124,7 @@ namespace pisaek2
                     }
 
                 }
-                    await Task.Delay(100);
+                    await Task.Delay(120);
             }
         }
 
